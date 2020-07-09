@@ -18,8 +18,8 @@ import time
 import json
 
 
-log_info = setup_logger(name ='info', log_file = '../../dev_info.log', level=logging.INFO)
-log_error = setup_logger(name ='error', log_file = '../../dev_error.log', level=logging.ERROR)
+log_info = setup_logger(name ='info', log_file = 'var/log/dev_info.log', level=logging.INFO)
+log_error = setup_logger(name ='error', log_file = 'var/log/dev_error.log', level=logging.ERROR)
 #log_format = '%(asctime)s %(filename)s: %(message)s'
 #logging.basicConfig(filename='test1.log', format=log_format)
 
@@ -45,33 +45,35 @@ start_time = time.time()
 
 def main(file_path,days,start_date,end_date,dict_columns):
     log_info.info("Program started")
-    spark = SparkSession.builder \
-        .appName('streaming_csv') \
-        .config("spark.jars", "G:/Users/csaiamogh/Downloads/spark-avro_2.12-3.0.0") \
-        .getOrCreate()
-    print(dict_columns)
-    dict_columns =  json.loads(dict_columns)
-
-    #mapping_expr = F.create_map([F.lit(x) for x in chain(*mapping.items())])
-
-    #df.withColumn("value", mapping_expr.getItem(col("key")))
-    print("Real Time Data Pipeline Started")
-
-    col_names,data_columns = inputs_obj.input_features(dict_columns =dict_columns)
-
-    data_types = inputs_obj.input_datatypes(col_names = col_names,dict_columns =dict_columns)
-
-
     try:
+        spark = SparkSession.builder \
+            .appName('streaming_csv') \
+            .getOrCreate()
+
+        log_info.info("Spark object created")
+
+
+        dict_columns_ =  json.loads('{"customer_id":"track_id","tranx_date":"tranx_date","gross_amount":"amount","quantity":"orders"}')
+        print(dict_columns_)
+
+
+
+
+        col_names,data_columns = inputs_obj.input_features(dict_columns = dict_columns_)
+
+        data_types = inputs_obj.input_datatypes(col_names = col_names)
+
+
+
         transactions_detail_csv = read_tables_obj.read_avro_file(file_path = file_path,file_format ='avro',spark=spark)
-    #ransactions_detail_csv = spark.read.format('avro').load(file_path)
+
 
 
 
         transactions_detail_csv = transforms_obj.read_avro_transform(data_columns = data_columns,
                                                                      df = transactions_detail_csv
                                             ,data_types = data_types,
-                                            dict_columns = dict_columns)
+                                            dict_columns = dict_columns_)
 
 
 
@@ -92,7 +94,7 @@ def main(file_path,days,start_date,end_date,dict_columns):
         data = rfm_object.transformation()
 
 
-    #data = rfm_object.transformation()
+        #data = rfm_object.transformation()
 
         rfm_aggregations = rfm_agg.rfm_agg()
         data_agg = rfm_aggregations.rfm_(data=data, spark=spark, columns=col_names)
@@ -101,32 +103,20 @@ def main(file_path,days,start_date,end_date,dict_columns):
 
 
     try:
-        write_obj.write_csv(df = data ,mode ='append',path = '/home/csai/Desktop/og_helicalinsight/data/customer_level_test/rfm_product_20191001-20191231/')
+        write_obj.write_csv(df = data ,mode ='append',path = '/E:/linux/backup/Documents/og_tranx/customer_level_test/rfm_product_20191001-20191231/')
     except Exception as e:
         log_error.error(e, exc_info=True)
     try:
         write_obj.write_csv(df=data_agg, mode='append',
-                        path='/home/csai/Desktop/og_helicalinsight/data/customer_level_test/rfm_product_20191001-20191231/')
+                        path='/E:/linux/backup/Documents/og_tranx/customer_level_test/rfm_product_20191001-20191231/')
     except Exception as e:
         log_error.error(e, exc_info=True)
 
-    #data.repartition(1).write.mode('Overwrite').csv("/home/csai/Desktop/og_helicalinsight/data/customer_level/rfm_product_20191001-20191231/",header=True)
-    #data.createOrReplaceTempView('data')
-    #spark.sql(select count(*)  from data).show()
-    #if data is not None:
-        #final_result = rfm_object.rfm_aggregation(data=data)
-        #final_result.show()
-        #final_result.repartition(1).write.mode('Overwrite').csv("/home/csai/Desktop/og_helicalinsight/180_days/rfm_agg_180_days/",header=True)
-      #  rfm = rfm_object.rfm_(data=data,start_date_end_date=start_end_date)
-     #   rfm.repartition(1).write.mode('Overwrite').csv("/home/csai/Desktop/og_helicalinsight/data/agg_level/rfm_product_20191001-20191231/",header=True)
-        #rfm.show() """
 
-
-    #print("--- %s seconds ---" % (time.time() - start_time))
 
     log_info.info( " Program ended & it took --- %s seconds ---" % (time.time() - start_time))
     spark.stop()
-    #print("--- %s seconds ---" % (time.time() - start_time))
+
 
 
 if __name__ == "__main__":

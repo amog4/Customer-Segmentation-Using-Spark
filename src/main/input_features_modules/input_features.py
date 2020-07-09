@@ -19,7 +19,7 @@ class Input():
 
         return col_names,data_columns
 
-    def input_datatypes(self,col_names,dict_columns):
+    def input_datatypes(self,col_names):
 
 
         data_types = []

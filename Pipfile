@@ -8,6 +8,7 @@ verify_ssl = true
 [packages]
 pyspark = "*"
 loguru = "*"
+pyspark-stubs = "==3.0.0.dev8"
 
 [requires]
 python_version = "3.7"
