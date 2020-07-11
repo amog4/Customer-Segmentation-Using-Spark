@@ -1,4 +1,4 @@
-# Segmentation by using PySpark (This is an end to end Data engineering project solution) 
+# Customer Segmentation by using PySpark (This is an end to end Data engineering project solution) 
 
 
 This is an end to end solution of RFM using pyspark it takes input in avro format and gives aggregations on customer level and also on segmentation level too.
