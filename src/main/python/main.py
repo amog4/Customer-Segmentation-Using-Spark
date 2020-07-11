@@ -20,18 +20,14 @@ import json
 
 log_info = setup_logger(name ='info', log_file = 'var/log/dev_info.log', level=logging.INFO)
 log_error = setup_logger(name ='error', log_file = 'var/log/dev_error.log', level=logging.ERROR)
-#log_format = '%(asctime)s %(filename)s: %(message)s'
-#logging.basicConfig(filename='test1.log', format=log_format)
-
-#from kafka.admin import KafkaAdminClient, NewTopic
-
-#log_format = '%(asctime)s %(filename)s: %(message)s'
-#logging.basicConfig(filename='rfm.log', format=log_format)
 
 
 props = cp.RawConfigParser()
 props.read('src/main/resources/application.properties')
 env = sys.argv[1]
+
+output_customers = props.get(env,"output_dir_customers")
+output_dir_agg = props.get(env,"output_dir_agg")
 
 inputs_obj = inputs.Input()
 read_tables_obj = read_tables.Read_module()
@@ -103,12 +99,12 @@ def main(file_path,days,start_date,end_date,dict_columns):
 
 
     try:
-        write_obj.write_csv(df = data ,mode ='append',path = '/E:/linux/backup/Documents/og_tranx/customer_level_test/rfm_product_20191001-20191231/')
+        write_obj.write_csv(df = data ,mode ='append',path = '{}'.format(output_customers ))
     except Exception as e:
         log_error.error(e, exc_info=True)
     try:
         write_obj.write_csv(df=data_agg, mode='append',
-                        path='/E:/linux/backup/Documents/og_tranx/customer_level_test/rfm_product_20191001-20191231/')
+                    path = '{}'.format(output_dir_agg))
     except Exception as e:
         log_error.error(e, exc_info=True)
 
@@ -127,7 +123,7 @@ if __name__ == "__main__":
 
     def load_data(*argv, **kwargs):
         return kwargs
-        #
+
 
 
     parameters = load_data(**dict([ar.split('=') for ar in sys.argv[1:] if ar.find('=') > 0]))
