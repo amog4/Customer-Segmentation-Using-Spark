@@ -42,48 +42,46 @@ start_time = time.time()
 def main(file_path,days,start_date,end_date,dict_columns):
     log_info.info("Program started")
     try:
+        # Creating sparksession (spark context object)
         spark = SparkSession.builder \
             .appName('streaming_csv') \
             .getOrCreate()
-
+        # Logging info
         log_info.info("Spark object created")
 
-
-        dict_columns_ =  json.loads('{"customer_id":"track_id","tranx_date":"tranx_date","gross_amount":"amount","quantity":"orders"}')
-        print(dict_columns_)
-
-
-
+        # loading columns
+        dict_columns_ =  json.loads(dict_columns)
+        #print(dict_columns_)
 
         col_names,data_columns = inputs_obj.input_features(dict_columns = dict_columns_)
 
         data_types = inputs_obj.input_datatypes(col_names = col_names)
 
 
-
-        transactions_detail_csv = read_tables_obj.read_avro_file(file_path = file_path,file_format ='avro',spark=spark)
-
-
+        # reading data
+        transactions_detail_avro = read_tables_obj.read_avro_file(file_path = file_path,file_format ='avro',spark=spark)
 
 
-        transactions_detail_csv = transforms_obj.read_avro_transform(data_columns = data_columns,
-                                                                     df = transactions_detail_csv
+        # transforming data
+
+        transactions_detail_avro = transforms_obj.read_avro_transform(data_columns = data_columns,
+                                                                     df = transactions_detail_avro
                                             ,data_types = data_types,
                                             dict_columns = dict_columns_)
 
 
 
 
-        transactions_detail_csv.createOrReplaceTempView('rfm_table')
+        transactions_detail_avro.createOrReplaceTempView('rfm_table')
 
-
+        # info about start and end date
         start_end_date = transforms_obj.find_start_end_date(days = days,spark =spark,start_date =start_date,end_date =end_date)
 
 
 
+        # rfm analysis
 
-
-        rfm_object = rfm_class.Transform(df=transactions_detail_csv,
+        rfm_object = rfm_class.Transform(df=transactions_detail_avro,
                                          start_date_end_date=start_end_date,
                                          spark=spark,
                                          columns = col_names)
@@ -92,6 +90,7 @@ def main(file_path,days,start_date,end_date,dict_columns):
 
         #data = rfm_object.transformation()
 
+        # rfm aggregations
         rfm_aggregations = rfm_agg.rfm_agg()
         data_agg = rfm_aggregations.rfm_(data=data, spark=spark, columns=col_names)
     except Exception as e:
