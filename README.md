@@ -9,7 +9,7 @@ what input parameters does python/main.py takes
   3. dict_columns (track_id -  customer or transaction id, organization,amount,tranx_date,product,orders,country,customer_type )
   
 In the output we get latency,ABS,total recency , total frequency , total monetary value with segments per customer further we also get segmentation level inputs 
-output dir can be added manually. 
+output dir to be added in resource application properties file. 
 
-This automated segmentation can run real time, if we have a spark cluster setup.
+This automated segmentation can run in real time.
 
