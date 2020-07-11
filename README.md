@@ -1,6 +1,17 @@
 # Customer Segmentation by using PySpark (This is an end to end Data engineering project solution) 
 
 
+├── src
+│   ├── main
+│     ├── python
+          ├── main.py
+│     ├──input_features_modules
+│     ├── read_write_modules
+│     ├── transform_modules
+      ├── rfm_modules
+      ├── logger_module
+
+
 This is an end to end solution of RFM using pyspark it takes input in avro format and gives aggregations on customer level and also segmentation level too.
 
 Parameters does python/main.py takes
