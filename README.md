@@ -13,3 +13,6 @@ output dir to be added in resource application properties file.
 
 This automated segmentation can run in real time.
 
+spark-submit --packages org.apache.spark:spark-avro_2.11:2.4.4 --conf avro.mapred.ignore.inputs.without.extension=True,spark.sql.cbo.enabled=True src/main/python/main.py dev start_date= end_date= file_path= dict_columns='' 
+
+
