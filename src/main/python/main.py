@@ -29,6 +29,8 @@ env = sys.argv[1]
 output_customers = props.get(env,"output_dir_customers")
 output_dir_agg = props.get(env,"output_dir_agg")
 
+
+# Initialization of Objects
 inputs_obj = inputs.Input()
 read_tables_obj = read_tables.Read_module()
 transforms_obj = transforms.TransformFeatures()
@@ -36,7 +38,7 @@ write_obj = write_tables.Write_module()
 
 
 start_time = time.time()
-#columns_track = ['uid', 'inserted_date', 'topic', 'offset']
+
 
 
 def main(file_path,days,start_date,end_date,dict_columns):
