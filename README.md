@@ -9,7 +9,7 @@
   
 ## Output dir to be added in resource application properties file
   
-  1. We get latency,ABS,total recency , total frequency , total monetary value with segments per customer further we also get segmentation level outputs.
+  * We get latency,ABS,total recency , total frequency , total monetary value with segments per customer further we also get segmentation level outputs.
  
 ## Terminal Command :- 
   * spark-submit --packages org.apache.spark:spark-avro_2.11:2.4.4 --conf avro.mapred.ignore.inputs.without.extension=True,spark.sql.cbo.enabled=True src/main/python/main.py dev     start_date= end_date= file_path= dict_columns='' 
