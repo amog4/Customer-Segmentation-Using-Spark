@@ -5,15 +5,16 @@ from pyspark.sql.window import Window
 # import arrow
 
 class Transform():
-
+    
     def __init__(self, df, start_date_end_date, spark,columns):
         self.df = df
         self.spark = spark
         self.start_date_end_date = start_date_end_date
         self.columns = columns
-
+        
+    
     def latency(self):
-
+        """ Latency calculation uses windowing function """
         lag_features = []
         for lg in self.columns:
             if lg == 'track_id':
@@ -29,7 +30,8 @@ class Transform():
         return df
 
     def transformation(self):
-
+        """ This function will transform the data into RFM  """
+        
         df = Transform.latency(self)
         self.start_date_end_date.createOrReplaceTempView('start_end_date')
 
