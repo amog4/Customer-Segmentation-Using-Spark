@@ -1,4 +1,4 @@
-
+# RFM Aggregation Class
 
 class rfm_agg():
 
