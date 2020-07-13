@@ -1,6 +1,6 @@
 # Customer Segmentation by using PySpark 
 
-* This repository is an end to end solution of RFM using pyspark it takes input in avro format and gives aggregations on customer level and also segmentation level too.
+* This repository is an end to end solution of RFM using pyspark it takes input in avro format and gives aggregations on customer level and also on segmentation.
 
 ## python/main.py takes following Parameters:
   1. file_path (avro file path)
