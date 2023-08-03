@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "b76ecc3d2264f3548c8b22f74562b817cb4ca0a641c31360239d203a26ff4208"
+            "sha256": "a602369d17afed1a98cb002b422397c3b790e9371658c3aa11e65827d7e4d8b3"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,21 +16,13 @@
         ]
     },
     "default": {
-        "colorama": {
-            "hashes": [
-                "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff",
-                "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"
-            ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==0.4.3"
-        },
         "loguru": {
             "hashes": [
-                "sha256:70201d5fce26da89b7a5f168caa2bb674e06b969829f56737db1d6472e53e7c3",
-                "sha256:e5d362a43cd2fc2da63551d79a6830619c4d5b3a8b976515748026f92f351b61"
+                "sha256:b28e72ac7a98be3d28ad28570299a393dfcd32e5e3f6a353dec94675767b6319",
+                "sha256:f8087ac396b5ee5f67c963b495d615ebbceac2796379599820e324419d53667c"
             ],
             "index": "pypi",
-            "version": "==0.5.1"
+            "version": "==0.5.3"
         },
         "py4j": {
             "hashes": [
@@ -46,13 +38,13 @@
             "index": "pypi",
             "version": "==3.0.0"
         },
-        "win32-setctime": {
+        "pyspark-stubs": {
             "hashes": [
-                "sha256:568fd636c68350bcc54755213fe01966fe0a6c90b386c0776425944a0382abef",
-                "sha256:b47e5023ec7f0b4962950902b15bc56464a380d869f59d27dbf9ab423b23e8f9"
+                "sha256:7157ad2f814b11dbc5173675a4c7b9918dc1d49c7e9ca1a6cf42ccfb70925031",
+                "sha256:b5eff158a1ecb50b3e80beab7227b56b394499b4e8a75d51f834774dad07da3b"
             ],
-            "markers": "sys_platform == 'win32'",
-            "version": "==1.0.1"
+            "index": "pypi",
+            "version": "==3.0.0.dev8"
         }
     },
     "develop": {}
